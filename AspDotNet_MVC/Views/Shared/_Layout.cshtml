@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AspDotNet_MVC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AspDotNet_MVC.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" />
+    <link href="css/site.css" rel='stylesheet' type='text/css'/>
+</head>
+
+<body style="background-color:aliceblue">
+    <div class="" >
+        <header class="bg-danger">
+            <nav class=" navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 ">
+                <div class="container-fluid">
+                    <a class="navbar-brand ps-5" asp-area="" asp-controller="Home" asp-action="Index"><img class="" width="50px" src="https://cdn.pixabay.com/photo/2017/01/31/23/42/animal-2028258_1280.png" alt="Alternate Text" /></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex  ">
+                        <ul class="navbar-nav flex-grow-1 d-flex justify-content-center ">
+                            <li class="nav-item px-3">
+                                <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="User" asp-action="Welcome">Trang chủ</a>
+                            </li>
+
+                            <li class="nav-item px-3">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Giới thiệu</a>
+                            </li>
+                            <li class="nav-item px-3 dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Thương hiệu</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#scrollspyHeading3">Dior</a></li>
+                                    <li><a class="dropdown-item" href="#scrollspyHeading4">Roles</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" asp-controller="SanPham" asp-action="Thuonghieu">Tất cả thương hiệu</a></li>
+                                </ul>
+                            </li>
+                           
+                            <li class="nav-item px-3">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="SanPham" asp-action="Index">Sản phẩm</a>
+                            </li>
+                            <li class="nav-item px-3">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="SanPham" asp-action="Index">Tin Tức</a>
+                            </li>
+                            <li class="nav-item px-3">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="SanPham" asp-action="Index">Liên hệ</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div >
+                        <nav class="navbar">
+                            <a class="nav-link" asp-controller="User" asp-action="Index"><i class="fa-solid fa-magnifying-glass"></i></a>
+                            <a class="nav-link" asp-controller="GioHangChiTiet" asp-action="Index"><i class="fa-solid fa-cart-shopping"></i></a>
+                            <a class="nav-link" asp-controller="User" asp-action="Index"><i class="fa-brands fa-twitter"></i></a>
+                            <a class="nav-link  dropdown-toggle dropdown" role="button" data-bs-toggle="dropdown"><i class="fa-brands fa-github"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Login">Đăng nhập</a></li>
+                                <li>
+                                    <form id="logoutForm" method="post" asp-controller="User" asp-action="Logout">
+                                        @Html.AntiForgeryToken()
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="document.getElementById('logoutForm').submit()">Đăng xuất</a>
+                                    </form>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="User" asp-action="Index">Quản lý người dùng</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </div>
+        
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="border-top footer text-muted" style="background-color:wheat">
+        <div class="container">
+            Welcome to wedsite to me - <a asp-area="" asp-controller="Home" asp-action="Privacy">ThoVu</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true" ></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
