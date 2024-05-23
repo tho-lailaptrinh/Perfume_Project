@@ -26,7 +26,7 @@ namespace AspDotNet_MVC.Models.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=ADMIN-PC\\SQLEXPRESS;Database=Thocuong;Trusted_Connection=True");
+            optionsBuilder.UseSqlServer("Server=ADMIN-PC\\SQLEXPRESS;Database=PerfumeProject;Trusted_Connection=True");
             base.OnConfiguring(optionsBuilder);
         }
 

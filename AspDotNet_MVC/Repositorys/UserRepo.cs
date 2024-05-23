@@ -33,8 +33,6 @@ namespace AspDotNet_MVC.Repositorys
             var gh = new GioHang()
             {
                 Id = user.Id,
-                TongTien = 123456,
-                //IdUser = u.Id,
             };
             _context.Users.Add(user);
             _context.GioHangs.Add(gh);

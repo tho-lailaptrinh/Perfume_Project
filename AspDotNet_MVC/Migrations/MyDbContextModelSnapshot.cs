@@ -70,9 +70,6 @@ namespace AspDotNet_MVC.Migrations
                     b.Property<Guid?>("IdUser")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal?>("TongTien")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IdUser")
@@ -97,6 +94,9 @@ namespace AspDotNet_MVC.Migrations
                     b.Property<Guid?>("IdSP")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal?>("Money")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdGH");
@@ -118,9 +118,6 @@ namespace AspDotNet_MVC.Migrations
                     b.Property<DateTime?>("NgayTao")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal?>("TongTien")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int?>("TrangThai")
                         .HasColumnType("int");
 
@@ -137,9 +134,6 @@ namespace AspDotNet_MVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double?>("Gia")
-                        .HasColumnType("float");
-
                     b.Property<Guid?>("IdDVVC")
                         .HasColumnType("uniqueidentifier");
 
@@ -152,8 +146,11 @@ namespace AspDotNet_MVC.Migrations
                     b.Property<Guid?>("IdTT")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("SoLuong")
+                    b.Property<int?>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

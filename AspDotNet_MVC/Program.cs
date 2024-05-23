@@ -14,6 +14,7 @@ builder.Services.AddTransient<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IGioHangRepo, GioHangRepo>();
 builder.Services.AddScoped<IGioHangChiTietRepo, GioHangChiTietRepo>();
 builder.Services.AddScoped<IDanhMucSPRepo, DanhMucSPRepo>();
+builder.Services.AddScoped<IHoaDonChiTietRepo, HoaDonChiTietRepo>();
 //builder.Services.AddScoped<ISanPhamRepo, SanPhamRepo>();
 builder.Services.AddSession();
 

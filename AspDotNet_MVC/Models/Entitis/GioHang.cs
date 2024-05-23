@@ -9,7 +9,6 @@ namespace AspDotNet_MVC.Models.Entitis
     public class GioHang
     {
         public Guid Id { get; set; }
-        public decimal? TongTien { get; set; }
         public Guid? IdUser { get; set; }
         public virtual User? Users { get; set; }
         public virtual ICollection<GioHangChiTiet>? GioHangChiTiets { get; set; }

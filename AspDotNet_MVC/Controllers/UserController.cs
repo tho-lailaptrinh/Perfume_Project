@@ -54,7 +54,7 @@ namespace AspDotNet_MVC.Controllers
         }
         public async Task<IActionResult> UpdateUser(Guid id, User u)
         {
-            await _userRepo.UpdateUser(id,u);
+            await _userRepo.UpdateUser(id,u);   
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Delete(Guid id)

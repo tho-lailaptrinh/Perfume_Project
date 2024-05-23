@@ -94,7 +94,6 @@ namespace AspDotNet_MVC.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TongTien = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     IdUser = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -112,7 +111,6 @@ namespace AspDotNet_MVC.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TongTien = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     NgayTao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TrangThai = table.Column<int>(type: "int", nullable: true),
                     IdUser = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -152,6 +150,7 @@ namespace AspDotNet_MVC.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
+                    Money = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     IdSP = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdGH = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -175,8 +174,8 @@ namespace AspDotNet_MVC.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Gia = table.Column<double>(type: "float", nullable: true),
-                    SoLuong = table.Column<int>(type: "int", nullable: true),
+                    TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: true),
                     IdSP = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdHD = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdTT = table.Column<Guid>(type: "uniqueidentifier", nullable: true),

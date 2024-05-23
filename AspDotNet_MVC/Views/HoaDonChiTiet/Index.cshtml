@@ -1,0 +1,99 @@
+﻿@model IEnumerable<AspDotNet_MVC.Models.Entitis.HoaDonChiTiet>
+@inject AspDotNet_MVC.IRepositorys.IHoaDonChiTietRepo _hDCT;
+@inject AspDotNet_MVC.IRepositorys.ISanPhamRepo _sp;
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdHD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDVVC)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @foreach (var sp in await _sp.GetSanPhams())
+                    {
+                        if (sp.Id == item.IdSP)
+                        {
+                            <img src="~/logo/@sp.ImgFile" class="img-fluid" width="60px" />
+                        }
+                    }
+            </td>
+                <td>
+                    @foreach (var sp in await _sp.GetSanPhams())
+                    {
+                        if (sp.Id == item.IdSP)
+                        {
+                            @sp.Ten;
+                        }
+                    }
+                </td>
+            <td>
+               @foreach (var sp in await _sp.GetSanPhams())
+                    {
+                        if (sp.Id == item.IdSP)
+                        {
+                            @sp.Gia;
+                            break;
+                        }
+                    }
+            </td>
+            <td>
+                @foreach (var hdct in _hDCT.GetAllHoaDonChiTiet())
+                    {
+                        if (hdct.Quantity == item.Quantity)
+                        {
+                            @hdct.Quantity
+                            ;
+                            break;
+                        }
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDVVC)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -3,6 +3,7 @@ using AspDotNet_MVC.Repositorys;
 using AspDotNet_MVC.Models.Entitis;
 using AspDotNet_MVC.IRepositorys;
 using AspDotNet_MVC.Models.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspDotNet_MVC.Controllers
 {
@@ -98,27 +99,45 @@ namespace AspDotNet_MVC.Controllers
                     }
                 }
                 if (!checkSelected) // nếu sp chưa được chọn
-                { 
-                    // tạo mới 1 GHCT ứng với sản phẩm
-                    GioHangChiTiet ghct = new GioHangChiTiet()
+                {
+                    var checkSL = _context.SanPhams.FirstOrDefault(x => x.Id == id);
+                    if (amount < 0 && checkSL.SoLuong < amount)
                     {
-                        Id = Guid.NewGuid(),
-                        IdSP = id,
-                        IdGH = Guid.Parse(login),
-                        Amount = amount
-                    };
-                    _context.GioHangChiTiets.Add(ghct);
-                    _context.SaveChanges();
-                    return RedirectToAction("Index");
+                        return Content("Rất tiếc, chúng tôi không đủ lượng hàng bạn cần rồi!!!");
+                    }
+                    else
+                    {
+                        // tạo mới 1 GHCT ứng với sản phẩm
+                        GioHangChiTiet ghct = new GioHangChiTiet()
+                        {
+                            Id = Guid.NewGuid(),
+                            IdSP = id,
+                            SanPhams = _context.SanPhams.Find(id),
+                            IdGH = Guid.Parse(login),
+                            Amount = amount,
+                            Money = checkSL.Gia * amount,
+                        };
+                        _context.GioHangChiTiets.Add(ghct);
+                        _context.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
                 }
                 else // nếu sản phẩm được chọn
                 {
-                    var updateGHCT = _context.GioHangChiTiets.Find(idGHCT);
-                    updateGHCT.Amount = updateGHCT.Amount + amount;
-                    _context.GioHangChiTiets.Update(updateGHCT);
-                    _context.SaveChanges(true);
-                    return RedirectToAction("Index");   
-                            
+                    var getSP = _context.SanPhams.FirstOrDefault(x => x.Id == id);
+                    if (getSP.SoLuong < amount)
+                    {
+                        return Content("Rất tiếc, chúng tôi không đủ lượng hàng bạn cần rồi!!!");
+                    }
+                    else
+                    {
+                        var updateGHCT = _context.GioHangChiTiets.Find(idGHCT);
+                        updateGHCT.Amount = updateGHCT.Amount + amount;
+                        updateGHCT.Money = getSP.Gia * updateGHCT.Amount;
+                        _context.GioHangChiTiets.Update(updateGHCT);
+                        _context.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
                 }
             }
         }

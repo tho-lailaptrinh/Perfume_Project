@@ -10,6 +10,7 @@ namespace AspDotNet_MVC.Models.Entitis
     {
         public Guid Id { get; set; }
         public int Amount { get; set; }
+        public decimal? Money { get; set; }
         public Guid? IdSP { get; set; }
         public virtual SanPham? SanPhams { get; set; }
         public Guid? IdGH { get; set; }
