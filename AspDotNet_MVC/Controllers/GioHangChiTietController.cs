@@ -1,6 +1,7 @@
-﻿using AspDotNet_MVC.IRepositorys;
-using AspDotNet_MVC.Models.Data;
-using AspDotNet_MVC.Models.Entitis;
+﻿
+using Infrastructure.IRepositorys;
+using Infrastructure.Models.Data;
+using Infrastructure.Models.Entitis;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotNet_MVC.Controllers
@@ -67,12 +68,9 @@ namespace AspDotNet_MVC.Controllers
 
                 if (product != null)
                 {
-                  
                     var _hDCT = new HoaDonChiTiet() 
                     {
-                       
                         Id = Guid.NewGuid(),
-                        TotalAmount = item.Money,
                         Quantity = item.Amount,
                         IdHD = _hD.Id,
                         IdSP = item.IdSP,
@@ -100,15 +98,20 @@ namespace AspDotNet_MVC.Controllers
             {
                 // lấy tất cả các sản phẩm có trong giỏ hàng của user đã đăng nhập
                 //var giohanglst = _context.GioHangChiTiets.Where(x => x.IdGH == Guid.Parse(getSession)).ToList();
-
+                decimal total =0;
                 // lấy sp đó có trong giỏ hàng đó ra
                 var spbuy = _context.GioHangChiTiets.Where(x => x.IdSP == id && x.IdGH == Guid.Parse(getSession)).ToList();
+                foreach (var item in spbuy)
+                {
+                    total += Convert.ToDecimal(item.Amount) * Convert.ToDecimal(item.SanPhams.Gia);
+                }
                 // tạo hoá đơn mới
                 if (spbuy != null)
                 {
                     var hd = new HoaDon()
                     {
                         Id = Guid.NewGuid(),
+                        TotalAmount = total,
                         NgayTao = DateTime.Now,
                         TrangThai = 1,
                         IdUser = Guid.Parse(getSession),
@@ -124,7 +127,6 @@ namespace AspDotNet_MVC.Controllers
                         var hdct = new HoaDonChiTiet()
                         {
                             Id = Guid.NewGuid(),
-                            TotalAmount = product.Gia,
                             Quantity = item.Amount,
                             IdSP = item.IdSP,
                             IdHD = hd.Id,

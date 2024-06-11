@@ -1,7 +1,7 @@
-﻿using AspDotNet_MVC.IRepositorys;
-using AspDotNet_MVC.Models.Data;
-using AspDotNet_MVC.Models.Entitis;
-using Microsoft.AspNetCore.Http;
+﻿
+using Infrastructure.IRepositorys;
+using Infrastructure.Models.Data;
+using Infrastructure.Models.Entitis;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotNet_MVC.Controllers
@@ -84,6 +84,7 @@ namespace AspDotNet_MVC.Controllers
             }
             return Content("Đăng nhập thất bại");
         }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("IdUser");

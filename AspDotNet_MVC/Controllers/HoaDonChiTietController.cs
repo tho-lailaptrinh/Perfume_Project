@@ -1,4 +1,4 @@
-﻿using AspDotNet_MVC.Models.Data;
+﻿using Infrastructure.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotNet_MVC.Controllers

@@ -1,4 +1,4 @@
-﻿using AspDotNet_MVC.IRepositorys;
+﻿using Infrastructure.IRepositorys;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotNet_MVC.Controllers

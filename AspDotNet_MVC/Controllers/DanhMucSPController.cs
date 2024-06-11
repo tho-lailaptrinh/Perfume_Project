@@ -1,20 +1,21 @@
-﻿using AspDotNet_MVC.IRepositorys;
-using AspDotNet_MVC.Models.Entitis;
+﻿
+using AspDotNet_MVC.IService;
+using AspDotNet_MVC.Service;
+using Infrastructure.EntityRequest;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotNet_MVC.Controllers
 {
     public class DanhMucSPController : Controller
     {
-        private IDanhMucSPRepo _repo;
-        public DanhMucSPController(IDanhMucSPRepo repo)
+        private IDanhMucSPService _service;
+        public DanhMucSPController(IDanhMucSPService service)
         {
-            _repo = repo;
+            _service = service;
         }
-
-        public async Task<IActionResult> Index()
+        public  IActionResult Index()
         {
-            var data = await _repo.GetAll();
+            var data =  _service.GetAll();
             return View(data);
         }
         public IActionResult Create()
@@ -22,9 +23,9 @@ namespace AspDotNet_MVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(DanhMucSanPham dmsp)
+        public ActionResult Create(DanhMucSanPhamRequest dmsp)
         {
-            await _repo.CreateDM(dmsp);
+            _service.CreateDMSP(dmsp);
             return RedirectToAction("Index");
         }
 

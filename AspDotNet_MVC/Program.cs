@@ -1,20 +1,23 @@
-using AspDotNet_MVC.IRepositorys;
-using AspDotNet_MVC.Models.Data;
-using AspDotNet_MVC.Repositorys;
+using AspDotNet_MVC.IService;
+using AspDotNet_MVC.Service;
+using Infrastructure.IRepositorys;
+using Infrastructure.Repositorys;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddTransient<IDanhMucSPService, DanhMucSPService>();
 
 builder.Services.AddTransient<ISanPhamRepo, SanPhamRepo>();
 builder.Services.AddTransient<IUserRepo, UserRepo>();
-builder.Services.AddScoped<IGioHangRepo, GioHangRepo>();
-builder.Services.AddScoped<IGioHangChiTietRepo, GioHangChiTietRepo>();
-builder.Services.AddScoped<IDanhMucSPRepo, DanhMucSPRepo>();
-builder.Services.AddScoped<IHoaDonChiTietRepo, HoaDonChiTietRepo>();
+builder.Services.AddTransient<IGioHangRepo, GioHangRepo>();
+builder.Services.AddTransient<IGioHangChiTietRepo, GioHangChiTietRepo>();
+builder.Services.AddTransient<IDanhMucSPRepo, DanhMucSPRepo>();
+builder.Services.AddTransient<IHoaDonChiTietRepo, HoaDonChiTietRepo>();
+
 //builder.Services.AddScoped<ISanPhamRepo, SanPhamRepo>();
 builder.Services.AddSession();
 

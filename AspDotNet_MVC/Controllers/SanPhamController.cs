@@ -1,15 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using AspDotNet_MVC.Repositorys;
-using AspDotNet_MVC.Models.Entitis;
-using AspDotNet_MVC.IRepositorys;
-using AspDotNet_MVC.Models.Data;
+﻿using Infrastructure.IRepositorys;
+using Infrastructure.Models.Data;
+using Infrastructure.Models.Entitis;
+using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace AspDotNet_MVC.Controllers
 {
     public class SanPhamController : Controller
     {
-
         private readonly ISanPhamRepo _repo;
         private MyDbContext _context;
         public SanPhamController(ISanPhamRepo repo, MyDbContext context)

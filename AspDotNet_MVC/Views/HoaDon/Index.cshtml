@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AspDotNet_MVC.Models.Entitis.HoaDon>
+﻿@model IEnumerable<Infrastructure.Models.Entitis.HoaDon>
 
 @{
     ViewData["Title"] = "Index";
@@ -18,11 +18,20 @@
             <th>
                 @Html.DisplayNameFor(model => model.NgayTao)
             </th>
+            <td>
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </td>
             <th>
                 @Html.DisplayNameFor(model => model.TrangThai)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDVVC)
             </th>
             <th></th>
         </tr>
@@ -37,11 +46,20 @@
                 @Html.DisplayFor(modelItem => item.NgayTao)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.TrangThai)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdUser)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdTT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdDVVC)
+                </td>
             <td>
                 @* @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) | *@
                 @Html.ActionLink("Chi tiết", "Detail", new { id=item.Id }) |
