@@ -1,5 +1,6 @@
 ﻿
 using API.IRepositorys;
+using Infrastructure.EntityRequest;
 using Infrastructure.Models.Data;
 using Infrastructure.Models.Entitis;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +14,12 @@ namespace API.Repositorys
         {
             _context = context;
         }
-        public async Task<List<User>> GetAllUser()
+        public List<User> GetAllUser()
         {
-            var data = await _context.Users.ToListAsync();
+            var data =  _context.Users.ToList();
             return data;
         }
-        public async Task<User> CreateUser(User u)
+        public User CreateUser(UserRequest u)
         {
             User user = new User()
             {
@@ -37,15 +38,15 @@ namespace API.Repositorys
             };
             _context.Users.Add(user);
             _context.GioHangs.Add(gh);
-            await _context.SaveChangesAsync();
+             _context.SaveChanges();
             return user;
         }
 
-        public async Task<User> UpdateUser(Guid id, User u)
+        public User UpdateUser(Guid id, User u)
         {
             try
             {
-                var bom = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+                var bom =  _context.Users.FirstOrDefault(x => x.Id == id);
                 bom.Name = u.Name;
                 bom.UserName = u.UserName;
                 bom.Password = u.Password;
@@ -54,7 +55,7 @@ namespace API.Repositorys
                 bom.Dob = u.Dob;
                 bom.Role = u.Role;
                 _context.Users.Update(bom);
-                await _context.SaveChangesAsync();
+                 _context.SaveChanges();
                 return bom;
             }
             catch (Exception)
@@ -63,24 +64,24 @@ namespace API.Repositorys
             }
         }
 
-        public async Task<User> DeleteUser(Guid id)
+        public User DeleteUser(Guid id)
         {
-                var bom = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+                var bom =  _context.Users.FirstOrDefault(x => x.Id == id);
                 _context.Users.Remove(bom);
-                await _context.SaveChangesAsync();
+                 _context.SaveChanges();
                 return bom;
            
         }
 
-        public  async Task<User> GetById(Guid id)
+        public  User GetById(Guid id)
         {
-            var getId = await _context.Users.FindAsync(id);
+            var getId =  _context.Users.Find(id);
             return getId;
         }
 
-        public async Task<bool> UserExists(string userName)
+        public bool UserExists(string userName)
         {
-            return await _context.Users.AnyAsync(x => x.UserName == userName);
+            return  _context.Users.Any(x => x.UserName == userName);
         }
     }
 }

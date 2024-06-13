@@ -1,4 +1,5 @@
 ﻿using API.IRepositorys;
+using Infrastructure.EntityRequest;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,12 @@ namespace API.Controllers
         public IActionResult GetAll()
         {
             var get = _repo.GetAll();
+            return Ok(get);
+        }
+        [HttpPost("create_dmsp")]
+        public IActionResult CreateDMSP(DanhMucSanPhamRequest request)
+        {
+            var get = _repo.CreateDMSP(request);
             return Ok(get);
         }
     }

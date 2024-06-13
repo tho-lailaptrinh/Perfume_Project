@@ -1,13 +1,14 @@
 ﻿
+using Infrastructure.EntityRequest;
 using Infrastructure.Models.Entitis;
 
 namespace API.IRepositorys
 {
     public interface ISanPhamRepo
     {
-        IEnumerable<SanPham> GetSanPhams();
+        List<SanPham> GetSanPhams();
         SanPham GetById(Guid id);
-       SanPham CreateSP(SanPham sp);
+        bool CreateSP(SanPhamRequest sp);
         SanPham UpdateSP(Guid id,SanPham sp);
         SanPham DeleteSP(Guid id);  
     }

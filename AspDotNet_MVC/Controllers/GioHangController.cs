@@ -1,21 +1,21 @@
-﻿using Infrastructure.IRepositorys;
+﻿using AspDotNet_MVC.IService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotNet_MVC.Controllers
 {
     public class GioHangController : Controller
     {
-        private IGioHangRepo _repo;
+        private IGioHangService _ser;
 
-        public GioHangController(IGioHangRepo repo)
+        public GioHangController(IGioHangService ser)
         {
-            _repo = repo;
+            _ser = ser;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            var data =await _repo.GetGioHang();
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    var data =  _ser.GetAllGioHang();
+        //    return View(data);
+        //}
     }
 }

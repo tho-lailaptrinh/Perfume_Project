@@ -1,5 +1,6 @@
 ﻿
 using API.IRepositorys;
+using Infrastructure.EntityRequest;
 using Infrastructure.Models.Data;
 using Infrastructure.Models.Entitis;
 
@@ -17,7 +18,7 @@ namespace API.Repositorys
             var data = _context.DanhMucSanPhams.ToList();
             return data;
         }
-        public bool CreateDM(DanhMucSanPham dmsp)
+        public bool CreateDMSP(DanhMucSanPhamRequest dmsp)
         {
             DanhMucSanPham DanhMuc = new DanhMucSanPham()
             {

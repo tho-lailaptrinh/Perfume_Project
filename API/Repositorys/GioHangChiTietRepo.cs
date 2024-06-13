@@ -14,9 +14,9 @@ namespace API.Repositorys
             _context = context;
         }
 
-        public async Task<IEnumerable<GioHangChiTiet>> GetGioHangCT()
+        public IEnumerable<GioHangChiTiet> GetGioHangCT()
         {
-            return await _context.GioHangChiTiets.ToListAsync();
+            return  _context.GioHangChiTiets.ToList();
             
         }
         public Task<GioHangChiTiet> CreateGioHangCT(GioHangChiTiet g)

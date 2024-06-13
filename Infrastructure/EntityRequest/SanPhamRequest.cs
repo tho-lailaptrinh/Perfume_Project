@@ -1,5 +1,4 @@
-﻿
-using Infrastructure.Models.Entitis;
+﻿using Infrastructure.Models.Entitis;
 
 namespace Infrastructure.EntityRequest
 {
@@ -10,11 +9,11 @@ namespace Infrastructure.EntityRequest
         public string? ImgFile { get; set; }
         public decimal? Gia { get; set; }
         public int? SoLuong { get; set; }
-        public virtual ICollection<HoaDonChiTiet>? HoaDonChiTiets { get; set; }
-        public virtual ICollection<GioHangChiTiet>? GioHangChiTiets { get; set; }
+        //public virtual ICollection<HoaDonChiTiet>? HoaDonChiTiets { get; set; }
+        //public virtual ICollection<GioHangChiTiet>? GioHangChiTiets { get; set; }
         public Guid? IdDMSP { get; set; }
-        public virtual DanhMucSanPham? DanhMucSanPhams { get; set; }
+        //public virtual DanhMucSanPham? DanhMucSanPhams { get; set; }
 
-        public virtual ICollection<DanhGiaSP>? DanhGiaSPs { get; set; }
+        //public virtual ICollection<DanhGiaSP>? DanhGiaSPs { get; set; }
     }
 }

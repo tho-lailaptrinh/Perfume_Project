@@ -1,4 +1,5 @@
-﻿using Infrastructure.IRepositorys;
+﻿using AspDotNet_MVC.IService;
+using Infrastructure.EntityRequest;
 using Infrastructure.Models.Data;
 using Infrastructure.Models.Entitis;
 using Microsoft.AspNetCore.Mvc;
@@ -9,73 +10,70 @@ namespace AspDotNet_MVC.Controllers
 {
     public class SanPhamController : Controller
     {
-        private readonly ISanPhamRepo _repo;
-        private MyDbContext _context;
-        public SanPhamController(ISanPhamRepo repo, MyDbContext context)
+        private readonly ISanPhamService _ser;
+        private readonly MyDbContext _context;
+
+        public SanPhamController( ISanPhamService ser, MyDbContext context)
         {
-            _repo = repo;
-            _context = context;
+            _ser = ser;
+            _context = context; 
         }
 
         // GET: SanPhams
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var data = await _repo.GetSanPhams();
-            var tenDMSP =  _context.DanhMucSanPhams.ToDictionary(x => x.Id, x => x.TenDM);
-            ViewBag.TenDMSP = tenDMSP;
-            return View(data);
+           var getSP = _ser.GetAllSP();
+            return View(getSP);
         }
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateSP(SanPham sp, IFormFile imgFile)
+        public IActionResult Create(SanPhamRequest sp, IFormFile imgFile)
         {
-            // tạo ra một nơi lưu ảnh
-            var path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot","img",imgFile.FileName);
+            //tạo ra một nơi lưu ảnh
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", imgFile.FileName);
             // copy ảnh và tải lên thư mục
-            var stream = new FileStream(path, FileMode.Create); 
+            var stream = new FileStream(path, FileMode.Create);
             // copy ảnh được chọn làm stream đó
             imgFile.CopyTo(stream);
             // cập nhật đường dẫn ảnh
             sp.ImgFile = imgFile.FileName;
+            _ser.CreateSP(sp);
+            return RedirectToAction("Index");
+        }
 
-            await _repo.CreateSP(sp);
-            return RedirectToAction("Index");
-        }
-        public async Task<IActionResult> Update(Guid id)
+        public IActionResult Update(Guid id)
         {
-            var getId = await _repo.GetById(id);
+            var getId = _ser.GetByIdSP(id);
             return View(getId);
         }
-        public async Task<IActionResult> UpdateSP(Guid id ,SanPham sp)
+        [HttpPost]
+        public IActionResult Update(Guid id, SanPhamRequest sp)
         {
-            //var getId = await _repo.GetById(id);
-            await _repo.UpdateSP(id,sp);
+            _ser.UpdateSP(id, sp);
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Delete(Guid id)
+
+        public IActionResult Delete(Guid id)
         {
-            //var getId = await _repo.GetById(id);
-            await _repo.DeleteSP(id);
+            _ser.DeleteSP(id);
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Detail(Guid id)
+        public IActionResult Details(Guid id)
         {
-            //var getId = await _repo.GetById(id);
-            var getId = await _repo.GetById(id);
+            var getId = _ser.GetByIdSP(id);
             return View(getId);
         }
-        public async Task<IActionResult> Thuonghieu()
+        public IActionResult Thuonghieu()
         {
-            var data = await _repo.GetSanPhams();
+            var data = _ser.GetAllSP();
             return View(data);
         }
 
         public IActionResult AddToCart(Guid id, int amount) // id ở đây là id sản phẩm và amount: số lượng sp
         {
-            //check xem đã đăng nhập chưa
             var login = HttpContext.Session.GetString("IdUser");
             if (login == null)
             {
@@ -83,18 +81,16 @@ namespace AspDotNet_MVC.Controllers
             }
             else
             {
-                // lấy tất cả sản phẩm có trong giỏ hàng user vừa đăng nhập
-                var userCart = _context.GioHangChiTiets.Where(x => x.IdGH == Guid.Parse(login)).ToList();
+               var userCart = _context.GioHangChiTiets.Where(x => x.IdGH == Guid.Parse(login)).ToList();
                 bool checkSelected = false;
                 Guid idGHCT = Guid.Empty;
                 foreach (var item in userCart)
                 {
-                    if(item.IdSP == id)
+                    if (item.IdSP == id)
                     {
-                        // nếu id sp trong giỏ hàng đã trùng với id được chọn
                         checkSelected = true;
                         idGHCT = item.Id; // lấy Id GHCT để tý nữa update
-                        break;  
+                        break;
                     }
                 }
                 if (!checkSelected) // nếu sp chưa được chọn
@@ -106,16 +102,16 @@ namespace AspDotNet_MVC.Controllers
                     }
                     else
                     {
-                        // tạo mới 1 GHCT ứng với sản phẩm
-                        GioHangChiTiet ghct = new GioHangChiTiet()
-                        {
-                            Id = Guid.NewGuid(),
-                            IdSP = id,
-                            SanPhams = _context.SanPhams.Find(id),
-                            IdGH = Guid.Parse(login),
-                            Amount = amount,
-                            Money = checkSL.Gia * amount,
-                        };
+                        //tạo mới 1 GHCT ứng với sản phẩm
+                       GioHangChiTiet ghct = new GioHangChiTiet()
+                       {
+                           Id = Guid.NewGuid(),
+                           IdSP = id,
+                           SanPhams = _context.SanPhams.Find(id),
+                           IdGH = Guid.Parse(login),
+                           Amount = amount,
+                           Money = checkSL.Gia * amount,
+                       };
                         _context.GioHangChiTiets.Add(ghct);
                         _context.SaveChanges();
                         return RedirectToAction("Index");

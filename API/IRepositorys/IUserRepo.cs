@@ -1,15 +1,16 @@
 ﻿
+using Infrastructure.EntityRequest;
 using Infrastructure.Models.Entitis;
 
 namespace API.IRepositorys
 {
     public interface IUserRepo
     {
-        Task<List<User>> GetAllUser();
-        Task<User> GetById(Guid id);
-        Task<User> CreateUser(User u);
-        Task<User> UpdateUser(Guid id, User u);
-        Task<User> DeleteUser(Guid id);
-        Task<bool> UserExists(string userName);
+        List<User> GetAllUser();
+        User GetById(Guid id);
+        User CreateUser(UserRequest u);
+        User UpdateUser(Guid id, User u);
+        User DeleteUser(Guid id);
+        bool UserExists(string userName);
     }
 }

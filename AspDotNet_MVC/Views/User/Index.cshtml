@@ -1,23 +1,21 @@
-﻿@model IEnumerable<Infrastructure.Models.Entitis.User>
+﻿@model IEnumerable<Infrastructure.EntityRequest.UserRequest>
+
 
 @{
     ViewData["Title"] = "Index";
-    var username = TempData["Username"];
-    var count = (int)ViewData["count"];
 }
 
-<h2>Quản lý người dùng</h2>
-
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-outline-primary text-decoration-none float-end">Tạo mới</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            @* <th>
+            <th>
                 @Html.DisplayNameFor(model => model.Id)
-            </th> *@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -45,9 +43,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-           @*  <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Id)
-            </td> *@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -70,9 +68,9 @@
                 @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td>
-                    @Html.ActionLink("Edit", "Update", new { id = item.Id }, new { @class="btn btn-warning"}) 
-                    @Html.ActionLink("Details", "Detail", new { id = item.Id }, new { @class = "btn btn-success" }) 
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

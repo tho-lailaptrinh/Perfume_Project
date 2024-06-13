@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Infrastructure.Models.Entitis.HoaDonChiTiet>
-@inject Infrastructure.IRepositorys.IHoaDonChiTietRepo _hDCT;
-@inject Infrastructure.IRepositorys.ISanPhamRepo _sp;
+@* @inject Infrastructure.IRepositorys.IHoaDonChiTietRepo _hDCT;
+@inject Infrastructure.IRepositorys.ISanPhamRepo _sp; *@
 @{
     ViewData["Title"] = "Index";
 }
@@ -35,8 +35,8 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @foreach (var sp in await _sp.GetSanPhams())
+            @* <td>
+                @foreach (var sp in  _sp.GetSanPhams())
                     {
                         if (sp.Id == item.IdSP)
                         {
@@ -45,7 +45,7 @@
                     }
             </td>
                 <td>
-                    @foreach (var sp in await _sp.GetSanPhams())
+                    @foreach (var sp in  _sp.GetSanPhams())
                     {
                         if (sp.Id == item.IdSP)
                         {
@@ -54,7 +54,7 @@
                     }
                 </td>
             <td>
-               @foreach (var sp in await _sp.GetSanPhams())
+               @foreach (var sp in  _sp.GetSanPhams())
                     {
                         if (sp.Id == item.IdSP)
                         {
@@ -73,7 +73,7 @@
                             break;
                         }
                     }
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.IdHD)
             </td>

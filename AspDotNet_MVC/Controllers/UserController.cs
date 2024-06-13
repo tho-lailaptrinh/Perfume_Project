@@ -1,30 +1,20 @@
 ﻿
-using Infrastructure.IRepositorys;
-using Infrastructure.Models.Data;
-using Infrastructure.Models.Entitis;
+using AspDotNet_MVC.IService;
+using Infrastructure.EntityRequest;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotNet_MVC.Controllers
 {
     public class UserController : Controller
     {
-        private MyDbContext _context;
-        private IUserRepo _userRepo;
-        public UserController(IUserRepo userRepo, MyDbContext context)
+        private readonly IUserService _ser;
+        public UserController( IUserService ser)
         {
-            _userRepo = userRepo;
-            _context = context;
+            _ser = ser;
         }
-        public async Task<IActionResult> Index(string name = "2134567fsdf")
+        public IActionResult Index()
         {
-            ViewData["count"] = 0;   
-            var data = await _userRepo.GetAllUser();
-            var search =  data.Where(x => x.Name.Contains(name)).ToList();
-            if (search.Count != 0)
-            {
-                ViewData["count"] = search.Count; // số lượng bản ghi đã đc tìm thấy
-                return View(search);
-            }
+            var data = _ser.GetAllUser();
             return View(data);
         }
         public IActionResult Create()
@@ -33,38 +23,42 @@ namespace AspDotNet_MVC.Controllers
         }
 
         [HttpPost] 
-        public async Task<IActionResult> CreateUser(User user)
+        public IActionResult CreateUser(UserRequest user)
         {
-            if (await _userRepo.UserExists(user.UserName))
-            {
-                ModelState.AddModelError("UserName", "Tên người dùng đã tồn tại!");
-            }
-            if (!ModelState.IsValid)
-            {
-                // Nếu có lỗi, trả về View "Create" với ModelState để hiển thị thông báo lỗi
-                return View("Create", user);
-            }
-            await _userRepo.CreateUser(user);
+            //var checkUser = _repo.UserExists(user.UserName);
+            //if (checkUser != null)
+            //{
+            //    ModelState.AddModelError("UserName", "Tên người dùng đã tồn tại!");
+            //}
+            //if (!ModelState.IsValid)
+            //{
+            //    // Nếu có lỗi, trả về View "Create" với ModelState để hiển thị thông báo lỗi
+            //    return View("Create", user);
+            //}
+             _ser.CreateUser(user);
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Update(Guid id)
+        public IActionResult Update(Guid id)
         {
-            var user = await _userRepo.GetById(id);
+            var user =  _ser.GetByIdUser(id);
             return View(user);
         }
-        public async Task<IActionResult> UpdateUser(Guid id, User u)
+        [HttpPost]
+        public IActionResult Update(Guid id, UserRequest user)
         {
-            await _userRepo.UpdateUser(id,u);   
+             _ser.UpdateUser(id,user);   
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Delete(Guid id)
+
+        public IActionResult Delete(Guid id)
         {
-            await _userRepo.DeleteUser(id);
+             _ser.DeleteUser(id);
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> Detail(Guid id)
+
+        public IActionResult Details(Guid id)
         {
-            var user = await _userRepo.GetById(id);
+            var user = _ser.GetByIdUser(id);
             return View(user);
         }
         //Login
@@ -73,16 +67,27 @@ namespace AspDotNet_MVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(string username, string password)
+        public IActionResult Login(string username, string password)
         {
-            var users = await _userRepo.GetAllUser();
-            var user = users.FirstOrDefault(p => p.UserName == username && p.Password == password);
-            if (user != null)
+            var userRequest = new UserRequest();
+            userRequest.UserName = username;
+            userRequest.Password = password;
+
+            if (_ser.Login(userRequest) == true)
             {
-                HttpContext.Session.SetString("IdUser", user.Id.ToString());
+                HttpContext.Session.SetString("IdUser", userRequest.Id.ToString());
                 return RedirectToAction("Welcome","User");
             }
             return Content("Đăng nhập thất bại");
+
+            //var users =  _userRepo.GetAllUser();
+            //var user = users.FirstOrDefault(p => p.UserName == username && p.Password == password);
+            //if (user != null)
+            //{
+            //    HttpContext.Session.SetString("IdUser", user.Id.ToString());
+            //    return RedirectToAction("Welcome","User");
+            //}
+            //return Content("Đăng nhập thất bại");
         }
 
         public IActionResult Logout()

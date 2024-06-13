@@ -14,7 +14,7 @@ namespace AspDotNet_MVC.Service
         public List<DanhMucSanPhamRequest> GetAll()
         {
             // đầu tiên cta cần phải có đường dẫn local hot
-            string requestURL = "https://localhost:7143/api/DanhMucSP/getAll";
+            string requestURL = "https://localhost:7143/api/DanhMucSanPham/getAll";
             // chúng ta sẽ sử dụng đối tượng client để gửi yêu cầu Get đến requestURL và đợi nhận lại kết quả .Result
             var respones = _client.GetStringAsync(requestURL).Result;
             // ở đây sử dụng thư viện Newtonsoft.Json phân tích chuỗi JSON trong response và chuyển đổi nó thành một List<DMSPR> và lưu vào biến data
@@ -23,18 +23,18 @@ namespace AspDotNet_MVC.Service
         }
         public bool CreateDMSP(DanhMucSanPhamRequest dmsp)
         {
-            string requestURL = "https://localhost:7143/api/DanhMucSP/getAll";
+            string requestURL = "https://localhost:7143/api/DanhMucSanPham/create_dmsp";
             var respones = _client.PostAsJsonAsync(requestURL, dmsp).Result;
-            return true;
+            if (respones.IsSuccessStatusCode)
+            {
+                return true;
+            }return false;
         }
 
         public bool DeleteDMSP(Guid id)
         {
             throw new NotImplementedException();
         }
-
-       
-
         public DanhMucSanPhamRequest GetById(Guid id)
         {
             throw new NotImplementedException();

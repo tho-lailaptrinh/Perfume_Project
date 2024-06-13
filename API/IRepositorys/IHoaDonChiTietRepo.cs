@@ -1,5 +1,4 @@
-﻿
-using Infrastructure.Models.Entitis;
+﻿using Infrastructure.Models.Entitis;
 
 namespace API.IRepositorys
 {

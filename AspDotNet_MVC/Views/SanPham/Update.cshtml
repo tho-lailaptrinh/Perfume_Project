@@ -1,4 +1,4 @@
-﻿@model Infrastructure.Models.Entitis.SanPham
+﻿@model Infrastructure.EntityRequest.SanPhamRequest
 
 @{
     ViewData["Title"] = "Update";
@@ -6,11 +6,11 @@
 
 <h1>Update</h1>
 
-<h4>SanPham</h4>
+<h4>SanPhamRequest</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="UpdateSP">
+        <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
@@ -21,6 +21,11 @@
                 <label asp-for="Ten" class="control-label"></label>
                 <input asp-for="Ten" class="form-control" />
                 <span asp-validation-for="Ten" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImgFile" class="control-label"></label>
+                <input asp-for="ImgFile" class="form-control" />
+                <span asp-validation-for="ImgFile" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Gia" class="control-label"></label>
@@ -37,14 +42,16 @@
                 <input asp-for="IdDMSP" class="form-control" />
                 <span asp-validation-for="IdDMSP" class="text-danger"></span>
             </div>
-            <div class="form-group pt-2">
-                <input type="submit" class="btn btn-primary" />
-                <a class="text-decoration-none btn btn-secondary" asp-action="Index">Back List</a>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

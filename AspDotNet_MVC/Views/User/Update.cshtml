@@ -1,14 +1,16 @@
-﻿@model Infrastructure.Models.Entitis.User
+﻿@model Infrastructure.EntityRequest.UserRequest
 
 @{
     ViewData["Title"] = "Update";
 }
 
-<h1>Edit người dùng</h1>
+<h1>Update</h1>
+
+<h4>UserRequest</h4>
 <hr />
-<div class="row d-flex justify-content-center">
+<div class="row">
     <div class="col-md-4">
-        <form asp-action="UpdateUser">
+        <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
@@ -58,7 +60,7 @@
 </div>
 
 <div>
-    <a asp-action="Index" class="btn btn-secondary text-decoration-none">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

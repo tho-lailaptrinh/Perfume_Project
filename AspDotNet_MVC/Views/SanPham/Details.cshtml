@@ -1,13 +1,13 @@
-﻿@model Infrastructure.Models.Entitis.SanPham
+﻿@model Infrastructure.EntityRequest.SanPhamRequest
 
 @{
-    ViewData["Title"] = "Detail";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Detail</h1>
+<h1>Details</h1>
 
 <div>
-    <h4>SanPham</h4>
+    <h4>SanPhamRequest</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -22,10 +22,10 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Ten)
         </dd>
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ImgFile)
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ImgFile)
         </dd>
         <dt class = "col-sm-2">

@@ -1,13 +1,13 @@
-﻿@model Infrastructure.Models.Entitis.User
+﻿@model Infrastructure.EntityRequest.UserRequest
 
 @{
-    ViewData["Title"] = "Detail";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Detail</h1>
+<h1>Details</h1>
 
 <div>
-    <h4>User</h4>
+    <h4>UserRequest</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -61,6 +61,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Update", new { id = Model.Id }, new{ @class="btn btn-warning"}) |
-    <a asp-action="Index" class="btn btn-secondary text-decoration-none" >Back to List</a>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
 </div>

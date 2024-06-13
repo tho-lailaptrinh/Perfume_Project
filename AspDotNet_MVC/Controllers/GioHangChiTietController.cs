@@ -1,5 +1,4 @@
 ﻿
-using Infrastructure.IRepositorys;
 using Infrastructure.Models.Data;
 using Infrastructure.Models.Entitis;
 using Microsoft.AspNetCore.Mvc;
@@ -8,18 +7,15 @@ namespace AspDotNet_MVC.Controllers
 {
     public class GioHangChiTietController : Controller
     {
-        private IGioHangChiTietRepo _repo;
-        private MyDbContext _context;
-
-        public GioHangChiTietController(IGioHangChiTietRepo repo, MyDbContext context)
+        MyDbContext _context;
+        public GioHangChiTietController(MyDbContext context)
         {
-            _repo = repo;
-            _context = context;
+            _context = context; 
         }
-        public  IActionResult Index()
+        public IActionResult Index()
         {
-            var data = _context.GioHangChiTiets.Where(x => x.IdGH == Guid.Parse(HttpContext.Session.GetString("IdUser"))).ToList();
-            return View(data);
+            //var data = _context.GioHangChiTiets.Where(x => x.IdGH == Guid.Parse(HttpContext.Session.GetString("IdUser"))).ToList();
+            return View();
         }
         public IActionResult GHCT()
         {
@@ -41,7 +37,7 @@ namespace AspDotNet_MVC.Controllers
             {
                 var product = _context.SanPhams.Find(lstCart[i].IdSP);
 
-                if(product != null)
+                if (product != null)
                 {
                     if (lstCart[i].Amount > product.SoLuong)
                     {
@@ -55,9 +51,9 @@ namespace AspDotNet_MVC.Controllers
             {
                 Id = Guid.NewGuid(),
                 NgayTao = DateTime.Now,
-                TrangThai =2,
+                TrangThai = 2,
                 IdUser = Guid.Parse(LoginUser)
-                
+
             };
             _context.HoaDons.Add(_hD);
             _context.SaveChanges();
@@ -68,7 +64,7 @@ namespace AspDotNet_MVC.Controllers
 
                 if (product != null)
                 {
-                    var _hDCT = new HoaDonChiTiet() 
+                    var _hDCT = new HoaDonChiTiet()
                     {
                         Id = Guid.NewGuid(),
                         Quantity = item.Amount,
@@ -98,7 +94,7 @@ namespace AspDotNet_MVC.Controllers
             {
                 // lấy tất cả các sản phẩm có trong giỏ hàng của user đã đăng nhập
                 //var giohanglst = _context.GioHangChiTiets.Where(x => x.IdGH == Guid.Parse(getSession)).ToList();
-                decimal total =0;
+                decimal total = 0;
                 // lấy sp đó có trong giỏ hàng đó ra
                 var spbuy = _context.GioHangChiTiets.Where(x => x.IdSP == id && x.IdGH == Guid.Parse(getSession)).ToList();
                 foreach (var item in spbuy)
@@ -134,13 +130,13 @@ namespace AspDotNet_MVC.Controllers
                         _context.HoaDonChiTiets.Add(hdct);
                     }
                 }
-              
+
                 _context.GioHangChiTiets.RemoveRange(spbuy);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
         }
-         public IActionResult ViewHoaDon()
+        public IActionResult ViewHoaDon()
         {
             return RedirectToAction("Index", "HoaDon");
         }

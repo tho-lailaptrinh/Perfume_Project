@@ -14,24 +14,22 @@ namespace API.Repositorys
         {
             _context = context;
         }
-        public async Task<IEnumerable<GioHang>> GetGioHang()
+        public IEnumerable<GioHang> GetGioHang()
         {
-            var result = await _context.GioHangs.ToListAsync();
+            var result =  _context.GioHangs.ToList();
             return result;
         }
-        public Task<GioHang> CreateGioHang(GioHang g)
+        public GioHang CreateGioHang(GioHang g)
         {
             throw new NotImplementedException();
         }
 
-        public Task<GioHang> DeleteGioHang(Guid id)
+        public GioHang UpdateGioHang(Guid id, GioHang g)
         {
             throw new NotImplementedException();
         }
 
-     
-
-        public Task<GioHang> UpdateGioHang(Guid id, GioHang g)
+        public GioHang DeleteGioHang(Guid id)
         {
             throw new NotImplementedException();
         }

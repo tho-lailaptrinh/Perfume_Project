@@ -1,5 +1,6 @@
 ﻿
 using API.IRepositorys;
+using Infrastructure.EntityRequest;
 using Infrastructure.Models.Data;
 using Infrastructure.Models.Entitis;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +15,12 @@ namespace API.Repositorys
         {
             _context = context;
         }
-        public async Task<IEnumerable<SanPham>> GetSanPhams()
+        public List<SanPham> GetSanPhams()
         {
-            var result = await  _context.SanPhams.ToListAsync();
+            var result = _context.SanPhams.ToList();
             return result;
         }
-        public async Task<SanPham> CreateSP(SanPham sp)
+        public bool CreateSP(SanPhamRequest sp)
         {
             SanPham sanpham = new SanPham()
             {
@@ -31,12 +32,12 @@ namespace API.Repositorys
                 IdDMSP = sp.IdDMSP,
             };
             _context.SanPhams.Add(sanpham);
-            await _context.SaveChangesAsync();
-            return sanpham;
+             _context.SaveChanges();
+            return true;
         }
-        public async Task<SanPham> UpdateSP(Guid id, SanPham sp)
+        public SanPham UpdateSP(Guid id, SanPham sp)
         {
-            var updateSP = await _context.SanPhams.FirstOrDefaultAsync(x => x.Id == id);
+            var updateSP =  _context.SanPhams.FirstOrDefault(x => x.Id == id);
             if (updateSP == null)
             {
                 // Xử lý khi sản phẩm không tồn tại, ví dụ: throw exception hoặc trả về một kết quả tùy ý
@@ -48,21 +49,22 @@ namespace API.Repositorys
             updateSP.SoLuong = sp.SoLuong;
             updateSP.IdDMSP = sp.IdDMSP; 
             _context.SanPhams.Update(sp);
-            await _context.SaveChangesAsync();
+             _context.SaveChanges();
             return updateSP;
         }
-        public async Task<SanPham> DeleteSP(Guid id)
-        {
-            var deleteSP = await _context.SanPhams.FindAsync(id);
+        public SanPham DeleteSP(Guid id)
+        {  
+        
+            var deleteSP =  _context.SanPhams.Find(id);
             _context.SanPhams.Remove(deleteSP);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return deleteSP;
               
         }
 
-        public async Task<SanPham> GetById(Guid id)
+        public SanPham GetById(Guid id)
         {
-            var getId = await _context.SanPhams.FindAsync(id);
+            var getId =  _context.SanPhams.Find(id);
             return getId;
         }
     }

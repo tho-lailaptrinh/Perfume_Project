@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotNet_MVC.Controllers
 {
-    public class DanhMucSPController : Controller
+    public class DanhMucSanPhamController : Controller
     {
         private IDanhMucSPService _service;
-        public DanhMucSPController(IDanhMucSPService service)
+        public DanhMucSanPhamController(IDanhMucSPService service)
         {
             _service = service;
         }
@@ -23,7 +23,7 @@ namespace AspDotNet_MVC.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(DanhMucSanPhamRequest dmsp)
+        public IActionResult Create(DanhMucSanPhamRequest dmsp)
         {
             _service.CreateDMSP(dmsp);
             return RedirectToAction("Index");

@@ -5,9 +5,9 @@ namespace API.IRepositorys
 {
     public interface IGioHangRepo
     {
-        Task<IEnumerable<GioHang>> GetGioHang();
-        Task<GioHang> CreateGioHang(GioHang g);
-        Task<GioHang> UpdateGioHang(Guid id, GioHang g);
-        Task<GioHang> DeleteGioHang(Guid id);
+        IEnumerable<GioHang> GetGioHang();
+        GioHang CreateGioHang(GioHang g);
+        GioHang UpdateGioHang(Guid id, GioHang g);
+        GioHang DeleteGioHang(Guid id);
     }
 }
